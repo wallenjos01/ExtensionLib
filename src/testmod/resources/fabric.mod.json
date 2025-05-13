@@ -4,5 +4,9 @@
   "version": "${version}",
   "entrypoints": {
     "main": [ "org.wallentines.extlib.test.Init" ]
+  },
+  "depends": {
+    "${id}": "${version}",
+    "databridge": "*"
   }
 }

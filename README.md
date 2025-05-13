@@ -30,7 +30,7 @@ Or, a configuration which requires at least a specific version of the `test:test
 ```
 
 ### Developers
-Developers can use this library to manage optional client mods. Extensions should always assumed to be optional, so 
+Developers can use this library to manage optional client mods. Extensions should always be assumed to be optional, so 
 joining vanilla servers doesn't cause issues. <br/>
 For example, to register an extension:
 ```java

@@ -12,5 +12,8 @@
     "client": [
       "org.wallentines.extlib.client.impl.ClientInit"
     ]
+  },
+  "depends": {
+    "midnightcfg": "*"
   }
 }
