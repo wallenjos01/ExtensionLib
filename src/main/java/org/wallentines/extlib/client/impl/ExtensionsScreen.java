@@ -2,7 +2,6 @@ package org.wallentines.extlib.client.impl;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.Version;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -21,6 +20,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
+import org.semver4j.Semver;
 import org.wallentines.extlib.api.ExtensionRegistry;
 
 import java.util.*;
@@ -46,11 +46,11 @@ public class ExtensionsScreen extends Screen {
         this.serverData = serverData;
         this.enabledExtensions = new ArrayList<>();
 
-        for (Map.Entry<ResourceLocation, Version> entry : ExtensionRegistry.getAllExtensions().entrySet()) {
+        for (Map.Entry<ResourceLocation, Semver> entry : ExtensionRegistry.getAllExtensions().entrySet()) {
             ResourceLocation loc = entry.getKey();
 
             String nameKey = loc.getNamespace() + ".extension." + loc.getPath() + ".name";
-            Component name = Component.translatable(nameKey).append(" (" + entry.getValue().getFriendlyString() + ")");
+            Component name = Component.translatable(nameKey).append(" (" + entry.getValue().toString() + ")");
             Component description = Component.translatable(loc.getNamespace() + ".extension." + loc.getPath() + ".description").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY));
 
             enabledExtensions.add(new Entry(loc, Language.getInstance().getOrDefault(nameKey), name, description, serverData.getEnabledExtensions().contains(loc)));

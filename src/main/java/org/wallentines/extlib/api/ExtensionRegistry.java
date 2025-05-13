@@ -1,8 +1,7 @@
 package org.wallentines.extlib.api;
 
-import net.fabricmc.loader.api.Version;
-import net.fabricmc.loader.api.VersionParsingException;
 import net.minecraft.resources.ResourceLocation;
+import org.semver4j.Semver;
 import org.wallentines.extlib.impl.ExtensionRegistryImpl;
 
 import java.util.Map;
@@ -16,7 +15,7 @@ public interface ExtensionRegistry {
      * Gets a map of all registered extensions to their versions
      * @return A map of all registered extensions
      */
-    static Map<ResourceLocation, Version> getAllExtensions() {
+    static Map<ResourceLocation, Semver> getAllExtensions() {
         return ExtensionRegistryImpl.ALL_EXTENSIONS;
     }
 
@@ -25,7 +24,7 @@ public interface ExtensionRegistry {
      * @param id The extension ID
      * @param version The extension version
      */
-    static void registerExtension(ResourceLocation id, Version version) {
+    static void registerExtension(ResourceLocation id, Semver version) {
         ExtensionRegistryImpl.ALL_EXTENSIONS.putIfAbsent(id, version);
     }
 
@@ -36,12 +35,8 @@ public interface ExtensionRegistry {
      * @param patch The patch number
      * @return A new Version
      */
-    static Version makeVersion(int major, int minor, int patch) {
-        try {
-            return Version.parse("%d.%d.%d".formatted(major, minor, patch));
-        } catch (VersionParsingException ex) {
-            throw new RuntimeException(ex);
-        }
+    static Semver makeVersion(int major, int minor, int patch) {
+        return Semver.of(major, minor, patch);
     }
 
 }

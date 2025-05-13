@@ -1,26 +1,26 @@
 package org.wallentines.extlib.impl;
 
 import com.google.common.collect.Maps;
-import net.fabricmc.loader.api.Version;
-import net.fabricmc.loader.api.metadata.version.VersionPredicate;
 
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
+import org.semver4j.RangesList;
+import org.semver4j.Semver;
 
 import java.util.*;
 
 @ApiStatus.Internal
-public record ExtensionMap(Map<ResourceLocation, Version> extensions) {
+public record ExtensionMap(Map<ResourceLocation, Semver> extensions) {
 
     public static final ExtensionMap EMPTY = new ExtensionMap(Collections.emptyMap());
 
-    public Map<ResourceLocation, VersionPredicate> test(Map<ResourceLocation, VersionPredicate> predicateMap) {
+    public Map<ResourceLocation, RangesList> test(Map<ResourceLocation, RangesList> predicateMap) {
 
-        Map<ResourceLocation, VersionPredicate> result = Maps.newHashMap();
-        for(Map.Entry<ResourceLocation, VersionPredicate> ent : predicateMap.entrySet()) {
-            VersionPredicate predicate = ent.getValue();
-            Version ver = extensions.get(ent.getKey());
-            if(ver == null || !predicate.test(ver)) {
+        Map<ResourceLocation, RangesList> result = Maps.newHashMap();
+        for(Map.Entry<ResourceLocation, RangesList> ent : predicateMap.entrySet()) {
+            RangesList predicate = ent.getValue();
+            Semver ver = extensions.get(ent.getKey());
+            if(ver == null || !ver.satisfies(predicate)) {
                 result.put(ent.getKey(), predicate);
             }
         }
@@ -29,7 +29,7 @@ public record ExtensionMap(Map<ResourceLocation, Version> extensions) {
 
     public ExtensionMap intersection(Collection<ResourceLocation> other) {
 
-        HashMap<ResourceLocation, Version> intersection = Maps.newHashMap();
+        HashMap<ResourceLocation, Semver> intersection = Maps.newHashMap();
         for(ResourceLocation loc : other) {
             if(extensions.containsKey(loc)) {
                 intersection.put(loc, extensions.get(loc));

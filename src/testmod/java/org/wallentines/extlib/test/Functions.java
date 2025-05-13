@@ -35,7 +35,7 @@ public class Functions {
             cmp.append("\n - ")
                     .append(Component.translatable(loc.getNamespace() + ".extension." + loc.getPath() + ".name"))
                     .append(" version ")
-                    .append(PlayerExtensions.getExtensionVersion(css.getPlayerOrException(), loc).getFriendlyString());
+                    .append(PlayerExtensions.getExtensionVersion(css.getPlayerOrException(), loc).toString());
         }
 
         css.getPlayerOrException().sendSystemMessage(cmp);

@@ -1,8 +1,8 @@
 package org.wallentines.extlib.mixin;
 
-import net.fabricmc.loader.api.metadata.version.VersionPredicate;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import org.semver4j.RangesList;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,13 +17,13 @@ import java.util.Map;
 public class MixinMinecraftServer {
 
     @Unique
-    private Map<ResourceLocation, VersionPredicate> extlib$versionPredicates = Collections.emptyMap();
+    private Map<ResourceLocation, RangesList> extlib$versionPredicates = Collections.emptyMap();
 
-    public Map<ResourceLocation, VersionPredicate> extlib$getExtensionPredicates() {
+    public Map<ResourceLocation, RangesList> extlib$getExtensionPredicates() {
         return extlib$versionPredicates;
     }
 
-    public void extlib$setExtensionPredicates(Map<ResourceLocation, VersionPredicate> predicates) {
+    public void extlib$setExtensionPredicates(Map<ResourceLocation, RangesList> predicates) {
         extlib$versionPredicates = predicates;
     }
 

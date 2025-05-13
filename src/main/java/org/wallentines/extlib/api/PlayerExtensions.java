@@ -1,9 +1,9 @@
 package org.wallentines.extlib.api;
 
-import net.fabricmc.loader.api.Version;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;
+import org.semver4j.Semver;
 import org.wallentines.extlib.impl.ExtensionMap;
 import org.wallentines.extlib.impl.ExtensionMapHolder;
 
@@ -20,7 +20,7 @@ public interface PlayerExtensions {
      * @param player The player to lookup
      * @return A map of extensions for a player
      */
-    static Map<ResourceLocation, Version> getExtensions(ServerPlayer player) {
+    static Map<ResourceLocation, Semver> getExtensions(ServerPlayer player) {
         ExtensionMap map = ((ExtensionMapHolder) player).getExtensionMap();
         if(map == null) return Collections.emptyMap();
 
@@ -48,7 +48,7 @@ public interface PlayerExtensions {
      * @return The player's extension version, or null if they do not have it enabled
      */
     @Nullable
-    static Version getExtensionVersion(ServerPlayer player, ResourceLocation extensionId) {
+    static Semver getExtensionVersion(ServerPlayer player, ResourceLocation extensionId) {
 
         ExtensionMap map = ((ExtensionMapHolder) player).getExtensionMap();
         if(map == null || map.extensions().isEmpty()) return null;

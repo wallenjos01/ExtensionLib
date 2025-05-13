@@ -22,6 +22,10 @@ dependencies {
 
     compileOnly(libs.jetbrains.annotations)
 
-    modImplementation("org.wallentines:databridge:0.8.1")
     modImplementation("org.wallentines:midnightcfg-platform-minecraft:3.4.0")
+
+    modImplementation(libs.semver)
+    include(libs.semver)
+
+    modImplementation("org.wallentines:databridge:0.8.1")
 }

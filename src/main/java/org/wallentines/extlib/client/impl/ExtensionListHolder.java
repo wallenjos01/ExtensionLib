@@ -11,7 +11,6 @@ import org.wallentines.mdcfg.ConfigObject;
 import org.wallentines.mdcfg.codec.FileWrapper;
 import org.wallentines.mdcfg.serializer.ConfigContext;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
