@@ -1,0 +1,6 @@
+{
+    "screen.extensions.title": "Extensions",
+    "screen.extensions.empty": "You do not have any installed extensions",
+    "button.extensions": "Extensions",
+    "disconnect.missing_extensions": "This server requires the following extensions: %s"
+}

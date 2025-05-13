@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}",
+  "version": "${version}",
+  "mixins": [
+    "extensionlib.mixins.json"
+  ],
+  "entrypoints": {
+    "main": [
+      "org.wallentines.extlib.impl.Init"
+    ],
+    "client": [
+      "org.wallentines.extlib.client.impl.ClientInit"
+    ]
+  }
+}

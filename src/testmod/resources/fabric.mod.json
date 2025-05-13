@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "id": "${id}-testmod",
+  "version": "${version}",
+  "entrypoints": {
+    "main": [ "org.wallentines.extlib.test.Init" ]
+  }
+}

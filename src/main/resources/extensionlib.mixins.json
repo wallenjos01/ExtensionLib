@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "org.wallentines.extlib.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinConfigPacketListener",
+    "MixinLoginPacketListener",
+    "MixinMinecraftServer",
+    "MixinServerPlayer"
+  ],
+  "client": [
+    "AccessorClientHandshakePacketListener",
+    "MixinEditServerScreen",
+    "MixinEditWorldScreen",
+    "MixinMinecraft",
+    "MixinServerData"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
