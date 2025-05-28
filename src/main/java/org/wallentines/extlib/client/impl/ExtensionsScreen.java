@@ -51,9 +51,13 @@ public class ExtensionsScreen extends Screen {
 
             String nameKey = loc.getNamespace() + ".extension." + loc.getPath() + ".name";
             Component name = Component.translatable(nameKey).append(" (" + entry.getValue().toString() + ")");
-            Component description = Component.translatable(loc.getNamespace() + ".extension." + loc.getPath() + ".description").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY));
+            Component description = Component
+                    .translatable(loc.getNamespace() + ".extension." + loc.getPath() + ".description")
+                    .setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY));
 
-            enabledExtensions.add(new Entry(loc, Language.getInstance().getOrDefault(nameKey), name, description, serverData.getEnabledExtensions().contains(loc)));
+            enabledExtensions.add(new Entry(loc, Language.getInstance().getOrDefault(nameKey), name, description,
+                    serverData.getEnabledExtensions().contains(loc)));
+            enabledExtensions.sort(Comparator.comparing(e -> e.sortName, String::compareToIgnoreCase));
         }
 
     }
@@ -64,7 +68,7 @@ public class ExtensionsScreen extends Screen {
 
         LinearLayout contents = layout.addToContents(LinearLayout.vertical());
 
-        if(enabledExtensions.isEmpty()) {
+        if (enabledExtensions.isEmpty()) {
 
             contents.addChild(new StringWidget(Component.translatable("screen.extensions.empty"), font));
 
@@ -76,7 +80,8 @@ public class ExtensionsScreen extends Screen {
 
                 LinearLayout nameAndDesc = new LinearLayout(0, 0, LinearLayout.Orientation.VERTICAL).spacing(4);
                 nameAndDesc.addChild(new StringWidget(0, 0, 299 - 44, 9, entry.name, font).alignLeft());
-                nameAndDesc.addChild(new MultiLineTextWidget(entry.description, font).setMaxWidth(299 - 44).setMaxRows(2));
+                nameAndDesc
+                        .addChild(new MultiLineTextWidget(entry.description, font).setMaxWidth(299 - 44).setMaxRows(2));
 
                 gridLayout.addChild(nameAndDesc, row, 0);
                 gridLayout.addChild(CycleButton
@@ -100,7 +105,8 @@ public class ExtensionsScreen extends Screen {
 
     @Override
     public void onClose() {
-        serverData.setEnabledExtensions(enabledExtensions.stream().filter(ent -> ent.enabled).map(ent -> ent.id).toList());
+        serverData.setEnabledExtensions(
+                enabledExtensions.stream().filter(ent -> ent.enabled).map(ent -> ent.id).toList());
         Minecraft.getInstance().setScreen(this.lastScreen);
     }
 
@@ -160,14 +166,14 @@ public class ExtensionsScreen extends Screen {
 
         protected void renderWidget(GuiGraphics guiGraphics, int i, int j, float f) {
             guiGraphics.enableScissor(this.getX(), this.getY(), this.getX() + this.width, this.getY() + this.height);
-            guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0.0F, -this.scrollAmount(), 0.0F);
+            guiGraphics.pose().pushMatrix();
+            guiGraphics.pose().translate(0.0F, (float) -this.scrollAmount());
 
-            for(AbstractWidget abstractWidget : this.children) {
+            for (AbstractWidget abstractWidget : this.children) {
                 abstractWidget.render(guiGraphics, i, j, f);
             }
 
-            guiGraphics.pose().popPose();
+            guiGraphics.pose().popMatrix();
             guiGraphics.disableScissor();
             this.renderScrollbar(guiGraphics);
         }
@@ -184,8 +190,9 @@ public class ExtensionsScreen extends Screen {
             if (guiEventListener != null) {
                 ScreenRectangle screenRectangle = this.getRectangle();
                 ScreenRectangle screenRectangle2 = guiEventListener.getRectangle();
-                int i = (int)((double)screenRectangle2.top() - this.scrollAmount() - (double)screenRectangle.top());
-                int j = (int)((double)screenRectangle2.bottom() - this.scrollAmount() - (double)screenRectangle.bottom());
+                int i = (int) ((double) screenRectangle2.top() - this.scrollAmount() - (double) screenRectangle.top());
+                int j = (int) ((double) screenRectangle2.bottom() - this.scrollAmount()
+                        - (double) screenRectangle.bottom());
                 if (i < 0) {
                     this.setScrollAmount(this.scrollAmount() + (double) i - (double) 14.0F);
                 } else if (j > 0) {
