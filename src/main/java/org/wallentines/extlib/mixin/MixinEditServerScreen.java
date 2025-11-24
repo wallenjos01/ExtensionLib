@@ -2,7 +2,7 @@ package org.wallentines.extlib.mixin;
 
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
-import net.minecraft.client.gui.screens.EditServerScreen;
+import net.minecraft.client.gui.screens.ManageServerScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.wallentines.extlib.client.impl.ExtensionListHolder;
 import org.wallentines.extlib.client.impl.ExtensionsScreen;
 
-@Mixin(EditServerScreen.class)
+@Mixin(ManageServerScreen.class)
 public class MixinEditServerScreen extends Screen {
 
     @Final
@@ -26,7 +26,7 @@ public class MixinEditServerScreen extends Screen {
         super(component);
     }
 
-    @Inject(method="init", at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/screens/EditServerScreen;updateAddButtonStatus()V"))
+    @Inject(method="init", at=@At(value="INVOKE", target="Lnet/minecraft/client/gui/screens/ManageServerScreen;updateAddButtonStatus()V"))
     private void onInit(CallbackInfo ci) {
 
         this.addRenderableWidget(

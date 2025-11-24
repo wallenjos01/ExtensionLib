@@ -79,7 +79,7 @@ public class ExtensionsScreen extends Screen {
             for (Entry entry : enabledExtensions) {
 
                 LinearLayout nameAndDesc = new LinearLayout(0, 0, LinearLayout.Orientation.VERTICAL).spacing(4);
-                nameAndDesc.addChild(new StringWidget(0, 0, 299 - 44, 9, entry.name, font).alignLeft());
+                nameAndDesc.addChild(new StringWidget(0, 0, 299 - 44, 9, entry.name, font));
                 nameAndDesc
                         .addChild(new MultiLineTextWidget(entry.description, font).setMaxWidth(299 - 44).setMaxRows(2));
 
@@ -175,7 +175,7 @@ public class ExtensionsScreen extends Screen {
 
             guiGraphics.pose().popMatrix();
             guiGraphics.disableScissor();
-            this.renderScrollbar(guiGraphics);
+            this.renderScrollbar(guiGraphics, i, j);
         }
 
         protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {

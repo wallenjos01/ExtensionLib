@@ -49,7 +49,7 @@ public class MixinMinecraft {
         extlib$setExtensionMap(ExtensionMap.EMPTY);
     }
 
-    @ModifyArg(method="doWorldLoad", at=@At(value="INVOKE", target="Lnet/minecraft/client/multiplayer/ClientHandshakePacketListenerImpl;<init>(Lnet/minecraft/network/Connection;Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/multiplayer/ServerData;Lnet/minecraft/client/gui/screens/Screen;ZLjava/time/Duration;Ljava/util/function/Consumer;Lnet/minecraft/client/multiplayer/TransferState;)V"))
+    @ModifyArg(method="doWorldLoad", at=@At(value="INVOKE", target="Lnet/minecraft/client/multiplayer/ClientHandshakePacketListenerImpl;<init>(Lnet/minecraft/network/Connection;Lnet/minecraft/client/Minecraft;Lnet/minecraft/client/multiplayer/ServerData;Lnet/minecraft/client/gui/screens/Screen;ZLjava/time/Duration;Ljava/util/function/Consumer;Lnet/minecraft/client/multiplayer/LevelLoadTracker;Lnet/minecraft/client/multiplayer/TransferState;)V"))
     private ServerData modifyLocalServerData(ServerData original, @Local(argsOnly=true) LevelStorageSource.LevelStorageAccess access) {
 
         ServerData modified = original;

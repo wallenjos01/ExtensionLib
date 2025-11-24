@@ -1,15 +1,19 @@
 package org.wallentines.extlib.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+
+import net.minecraft.network.Connection;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.CommonListenerCookie;
 import net.minecraft.server.network.ServerConfigurationPacketListenerImpl;
+import net.minecraft.server.network.config.PrepareSpawnTask;
+
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.wallentines.extlib.impl.ExtensionMap;
 import org.wallentines.extlib.impl.ExtensionMapHolder;
 
@@ -28,9 +32,11 @@ public class MixinConfigPacketListener {
         this.extlib$extensions = extlib$extensions;
     }
 
-    @Inject(method="handleConfigurationFinished", at=@At(value="INVOKE", target="Lnet/minecraft/server/players/PlayerList;placeNewPlayer(Lnet/minecraft/network/Connection;Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/server/network/CommonListenerCookie;)V"))
-    private void onConfigurationFinished(CallbackInfo ci, @Local ServerPlayer player) {
-        ((ExtensionMapHolder) player).setExtensionMap(extlib$extensions);
+    @WrapOperation(method="handleConfigurationFinished", at=@At(value="INVOKE", target="Lnet/minecraft/server/network/config/PrepareSpawnTask;spawnPlayer(Lnet/minecraft/network/Connection;Lnet/minecraft/server/network/CommonListenerCookie;)Lnet/minecraft/server/level/ServerPlayer;"))
+    private ServerPlayer onConfigurationFinished(PrepareSpawnTask task, Connection connection, CommonListenerCookie cookie, Operation<ServerPlayer> original) {
+        ServerPlayer spl = original.call(task, connection, cookie);
+        ((ExtensionMapHolder) spl).setExtensionMap(extlib$extensions);
+        return spl;
     }
 
 
