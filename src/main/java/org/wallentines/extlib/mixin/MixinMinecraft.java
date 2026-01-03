@@ -4,7 +4,7 @@ import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.multiplayer.ServerData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.*;
@@ -63,7 +63,7 @@ public class MixinMinecraft {
         if(Files.isRegularFile(extFile)) {
             try {
                 ConfigObject obj = JSONCodec.fileCodec().loadFromFile(ConfigContext.INSTANCE, extFile, StandardCharsets.UTF_8);
-                List<ResourceLocation> ids = Util.ID_SERIALIZER.listOf().mapToList().deserialize(ConfigContext.INSTANCE, obj).getOrThrow();
+                List<Identifier> ids = Util.ID_SERIALIZER.listOf().mapToList().deserialize(ConfigContext.INSTANCE, obj).getOrThrow();
                 ((ExtensionListHolder) modified).setEnabledExtensions(ids);
             } catch(DecodeException | SerializeException | IOException ex) {
                 LOGGER.warn("Unable to load extensions.json", ex);

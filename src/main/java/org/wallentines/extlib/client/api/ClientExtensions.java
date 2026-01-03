@@ -3,7 +3,7 @@ package org.wallentines.extlib.client.api;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.semver4j.Semver;
 import org.wallentines.extlib.impl.ExtensionMap;
@@ -22,7 +22,7 @@ public interface ClientExtensions {
      * Gets a map of extensions the client currently has enabled to their version
      * @return A map of extensions IDs to versions
      */
-    static Map<ResourceLocation, Semver> getExtensions() {
+    static Map<Identifier, Semver> getExtensions() {
         ExtensionMap map = ((ExtensionMapHolder) Minecraft.getInstance()).getExtensionMap();
         if(map == null) return Collections.emptyMap();
 
@@ -34,7 +34,7 @@ public interface ClientExtensions {
      * @param extension The extension to lookup
      * @return Whether the client currently has the extension enabled
      */
-    static boolean hasExtension(ResourceLocation extension) {
+    static boolean hasExtension(Identifier extension) {
 
         ExtensionMap map = ((ExtensionMapHolder) Minecraft.getInstance()).getExtensionMap();
         if(map == null || map.extensions().isEmpty()) return false;
@@ -48,7 +48,7 @@ public interface ClientExtensions {
      * @return The extension version, or null if the client doesn't have it enabled
      */
     @Nullable
-    static Semver getExtensionVersion(ResourceLocation extension) {
+    static Semver getExtensionVersion(Identifier extension) {
 
         ExtensionMap map = ((ExtensionMapHolder) Minecraft.getInstance()).getExtensionMap();
         if(map == null || map.extensions().isEmpty()) return null;

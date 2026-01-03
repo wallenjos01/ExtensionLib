@@ -17,7 +17,7 @@ import net.minecraft.locale.Language;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 import org.semver4j.Semver;
@@ -46,8 +46,8 @@ public class ExtensionsScreen extends Screen {
         this.serverData = serverData;
         this.enabledExtensions = new ArrayList<>();
 
-        for (Map.Entry<ResourceLocation, Semver> entry : ExtensionRegistry.getAllExtensions().entrySet()) {
-            ResourceLocation loc = entry.getKey();
+        for (Map.Entry<Identifier, Semver> entry : ExtensionRegistry.getAllExtensions().entrySet()) {
+            Identifier loc = entry.getKey();
 
             String nameKey = loc.getNamespace() + ".extension." + loc.getPath() + ".name";
             Component name = Component.translatable(nameKey).append(" (" + entry.getValue().toString() + ")");
@@ -126,14 +126,14 @@ public class ExtensionsScreen extends Screen {
     }
 
     private static class Entry {
-        final ResourceLocation id;
+        final Identifier id;
         final String sortName;
         final Component name;
         final Component description;
 
         boolean enabled;
 
-        private Entry(ResourceLocation id, String sortName, Component name, Component description, boolean enabled) {
+        private Entry(Identifier id, String sortName, Component name, Component description, boolean enabled) {
             this.id = id;
             this.sortName = sortName;
             this.name = name;

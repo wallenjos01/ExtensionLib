@@ -1,6 +1,6 @@
 package org.wallentines.extlib.mixin;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import org.semver4j.RangesList;
 import org.spongepowered.asm.mixin.Implements;
@@ -17,13 +17,13 @@ import java.util.Map;
 public class MixinMinecraftServer {
 
     @Unique
-    private Map<ResourceLocation, RangesList> extlib$versionPredicates = Collections.emptyMap();
+    private Map<Identifier, RangesList> extlib$versionPredicates = Collections.emptyMap();
 
-    public Map<ResourceLocation, RangesList> extlib$getExtensionPredicates() {
+    public Map<Identifier, RangesList> extlib$getExtensionPredicates() {
         return extlib$versionPredicates;
     }
 
-    public void extlib$setExtensionPredicates(Map<ResourceLocation, RangesList> predicates) {
+    public void extlib$setExtensionPredicates(Map<Identifier, RangesList> predicates) {
         extlib$versionPredicates = predicates;
     }
 

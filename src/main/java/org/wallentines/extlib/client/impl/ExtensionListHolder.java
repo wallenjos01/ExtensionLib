@@ -2,7 +2,7 @@ package org.wallentines.extlib.client.impl;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.wallentines.extlib.api.ExtensionRegistry;
 import org.wallentines.extlib.impl.Util;
@@ -18,15 +18,15 @@ import java.util.List;
 @Environment(EnvType.CLIENT)
 public interface ExtensionListHolder {
 
-    List<ResourceLocation> getEnabledExtensions();
+    List<Identifier> getEnabledExtensions();
 
-    void setEnabledExtensions(List<ResourceLocation> extensions);
+    void setEnabledExtensions(List<Identifier> extensions);
 
 
     record FileExtensionListHolder(FileWrapper<ConfigObject> file) implements ExtensionListHolder {
 
         @Override
-        public List<ResourceLocation> getEnabledExtensions() {
+        public List<Identifier> getEnabledExtensions() {
             file.load();
             if(file.getRoot() == null || !file.getRoot().isList()) {
                 file.setRoot(new ConfigList());
@@ -38,7 +38,7 @@ public interface ExtensionListHolder {
         }
 
         @Override
-        public void setEnabledExtensions(List<ResourceLocation> extensions) {
+        public void setEnabledExtensions(List<Identifier> extensions) {
             file.setRoot(Util.ID_SERIALIZER.listOf().mapToList().serialize(ConfigContext.INSTANCE, extensions).getOrThrow());
         }
     }

@@ -1,6 +1,6 @@
 package org.wallentines.extlib.api;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.semver4j.Semver;
 import org.wallentines.extlib.impl.ExtensionRegistryImpl;
 
@@ -15,7 +15,7 @@ public interface ExtensionRegistry {
      * Gets a map of all registered extensions to their versions
      * @return A map of all registered extensions
      */
-    static Map<ResourceLocation, Semver> getAllExtensions() {
+    static Map<Identifier, Semver> getAllExtensions() {
         return ExtensionRegistryImpl.ALL_EXTENSIONS;
     }
 
@@ -24,7 +24,7 @@ public interface ExtensionRegistry {
      * @param id The extension ID
      * @param version The extension version
      */
-    static void registerExtension(ResourceLocation id, Semver version) {
+    static void registerExtension(Identifier id, Semver version) {
         ExtensionRegistryImpl.ALL_EXTENSIONS.putIfAbsent(id, version);
     }
 

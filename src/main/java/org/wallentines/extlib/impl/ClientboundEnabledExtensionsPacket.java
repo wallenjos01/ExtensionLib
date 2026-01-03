@@ -3,16 +3,16 @@ package org.wallentines.extlib.impl;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @ApiStatus.Internal
-public record ClientboundEnabledExtensionsPacket(Set<ResourceLocation> ids) implements CustomPacketPayload {
+public record ClientboundEnabledExtensionsPacket(Set<Identifier> ids) implements CustomPacketPayload {
 
-    public static final ResourceLocation ID = ResourceLocation.tryBuild("extensionlib", "enabled_extensions");
+    public static final Identifier ID = Identifier.tryBuild("extensionlib", "enabled_extensions");
     public static final CustomPacketPayload.Type<ClientboundEnabledExtensionsPacket> TYPE = new Type<>(ID);
 
     public static final StreamCodec<FriendlyByteBuf, ClientboundEnabledExtensionsPacket> CODEC = new StreamCodec<>() {
@@ -20,9 +20,9 @@ public record ClientboundEnabledExtensionsPacket(Set<ResourceLocation> ids) impl
         public ClientboundEnabledExtensionsPacket decode(FriendlyByteBuf buf) {
 
             int count = buf.readVarInt();
-            Set<ResourceLocation> ids = new HashSet<>();
+            Set<Identifier> ids = new HashSet<>();
             for (int i = 0; i < count; i++) {
-                ids.add(buf.readResourceLocation());
+                ids.add(buf.readIdentifier());
             }
 
             return new ClientboundEnabledExtensionsPacket(ids);
@@ -32,8 +32,8 @@ public record ClientboundEnabledExtensionsPacket(Set<ResourceLocation> ids) impl
         public void encode(FriendlyByteBuf buf, ClientboundEnabledExtensionsPacket packet) {
 
             buf.writeVarInt(packet.ids.size());
-            for (ResourceLocation id : packet.ids) {
-                buf.writeResourceLocation(id);
+            for (Identifier id : packet.ids) {
+                buf.writeIdentifier(id);
             }
         }
     };

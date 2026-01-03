@@ -8,7 +8,7 @@ import net.minecraft.commands.execution.Frame;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import org.wallentines.extlib.api.PlayerExtensions;
 
@@ -19,7 +19,7 @@ public class Functions {
 
     public static void test(CommandSourceStack css,
                             CompoundTag tag,
-                            ResourceLocation id,
+                            Identifier id,
                             CommandDispatcher<CommandSourceStack> dispatcher,
                             ExecutionContext<CommandSourceStack> ctx,
                             Frame frame,
@@ -27,11 +27,11 @@ public class Functions {
 
 
         ServerPlayer player = css.getPlayerOrException();
-        Set<ResourceLocation> extensions = PlayerExtensions.getExtensions(player).keySet();
+        Set<Identifier> extensions = PlayerExtensions.getExtensions(player).keySet();
 
         MutableComponent cmp = player.getDisplayName().copy().append(" has " + extensions.size() + " extensions enabled:");
 
-        for(ResourceLocation loc : extensions) {
+        for(Identifier loc : extensions) {
             cmp.append("\n - ")
                     .append(Component.translatable(loc.getNamespace() + ".extension." + loc.getPath() + ".name"))
                     .append(" version ")

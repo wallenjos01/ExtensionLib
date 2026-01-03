@@ -8,7 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.protocol.common.ClientboundCustomPayloadPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.semver4j.RangesList;
 import org.slf4j.Logger;
@@ -61,12 +61,12 @@ public class Init implements ModInitializer {
             ExtensionMap extensions = ((ExtensionMapHolder) handler).getExtensionMap();
             if(extensions == null) extensions = ExtensionMap.EMPTY;
 
-            Map<ResourceLocation, RangesList> predicates = ((ExtensionPredicateHolder) server).getExtensionPredicates();
-            Map<ResourceLocation, RangesList> missing = extensions.test(predicates);
+            Map<Identifier, RangesList> predicates = ((ExtensionPredicateHolder) server).getExtensionPredicates();
+            Map<Identifier, RangesList> missing = extensions.test(predicates);
             if(!missing.isEmpty()) {
 
                 MutableComponent with = Component.literal("\n").withStyle(ChatFormatting.GRAY);
-                for(Map.Entry<ResourceLocation, RangesList> entry : missing.entrySet()) {
+                for(Map.Entry<Identifier, RangesList> entry : missing.entrySet()) {
 
                     String extensionName = entry.getKey().getNamespace() + ".extension." + entry.getKey().getPath() + ".name";
 

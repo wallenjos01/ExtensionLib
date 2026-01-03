@@ -2,7 +2,7 @@ package org.wallentines.extlib.impl;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
 import org.semver4j.RangesList;
 import org.semver4j.Semver;
@@ -10,14 +10,14 @@ import org.semver4j.Semver;
 import java.util.*;
 
 @ApiStatus.Internal
-public record ExtensionMap(Map<ResourceLocation, Semver> extensions) {
+public record ExtensionMap(Map<Identifier, Semver> extensions) {
 
     public static final ExtensionMap EMPTY = new ExtensionMap(Collections.emptyMap());
 
-    public Map<ResourceLocation, RangesList> test(Map<ResourceLocation, RangesList> predicateMap) {
+    public Map<Identifier, RangesList> test(Map<Identifier, RangesList> predicateMap) {
 
-        Map<ResourceLocation, RangesList> result = Maps.newHashMap();
-        for(Map.Entry<ResourceLocation, RangesList> ent : predicateMap.entrySet()) {
+        Map<Identifier, RangesList> result = Maps.newHashMap();
+        for(Map.Entry<Identifier, RangesList> ent : predicateMap.entrySet()) {
             RangesList predicate = ent.getValue();
             Semver ver = extensions.get(ent.getKey());
             if(ver == null || !ver.satisfies(predicate)) {
@@ -27,10 +27,10 @@ public record ExtensionMap(Map<ResourceLocation, Semver> extensions) {
         return result;
     }
 
-    public ExtensionMap intersection(Collection<ResourceLocation> other) {
+    public ExtensionMap intersection(Collection<Identifier> other) {
 
-        HashMap<ResourceLocation, Semver> intersection = Maps.newHashMap();
-        for(ResourceLocation loc : other) {
+        HashMap<Identifier, Semver> intersection = Maps.newHashMap();
+        for(Identifier loc : other) {
             if(extensions.containsKey(loc)) {
                 intersection.put(loc, extensions.get(loc));
             }

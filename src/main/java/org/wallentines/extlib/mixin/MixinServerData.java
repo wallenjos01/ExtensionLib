@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.spongepowered.asm.mixin.Implements;
 import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,13 +26,13 @@ import java.util.List;
 public class MixinServerData {
 
     @Unique
-    private List<ResourceLocation> extlib$enabledExtensions = new ArrayList<>();
+    private List<Identifier> extlib$enabledExtensions = new ArrayList<>();
 
-    public List<ResourceLocation> extlib$getEnabledExtensions() {
+    public List<Identifier> extlib$getEnabledExtensions() {
         return extlib$enabledExtensions;
     }
 
-    public void extlib$setEnabledExtensions(List<ResourceLocation> enabledExtensions) {
+    public void extlib$setEnabledExtensions(List<Identifier> enabledExtensions) {
         this.extlib$enabledExtensions = enabledExtensions;
     }
 
@@ -44,7 +44,7 @@ public class MixinServerData {
     @Inject(method="write", at=@At(value="RETURN"))
     private void writeServerData(CallbackInfoReturnable<CompoundTag> cir, @Local CompoundTag tag) {
         ListTag listTag = new ListTag();
-        for(ResourceLocation ext : extlib$enabledExtensions) {
+        for(Identifier ext : extlib$enabledExtensions) {
             listTag.add(StringTag.valueOf(ext.toString()));
         }
         tag.put("enabled_extensions", listTag);
@@ -53,9 +53,9 @@ public class MixinServerData {
     @Inject(method="read", at=@At(value="RETURN"))
     private static void onRead(CompoundTag compoundTag, CallbackInfoReturnable<ServerData> cir, @Local ServerData out) {
 
-        List<ResourceLocation> enabledExtensions = new ArrayList<>();
+        List<Identifier> enabledExtensions = new ArrayList<>();
         for(Tag t : compoundTag.getListOrEmpty("enabled_extensions")) {
-            t.asString().map(ResourceLocation::tryParse).ifPresent(enabledExtensions::add);
+            t.asString().map(Identifier::tryParse).ifPresent(enabledExtensions::add);
         }
 
         ((ExtensionListHolder) out).setEnabledExtensions(enabledExtensions);

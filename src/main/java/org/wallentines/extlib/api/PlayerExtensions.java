@@ -1,6 +1,6 @@
 package org.wallentines.extlib.api;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.semver4j.Semver;
@@ -20,7 +20,7 @@ public interface PlayerExtensions {
      * @param player The player to lookup
      * @return A map of extensions for a player
      */
-    static Map<ResourceLocation, Semver> getExtensions(ServerPlayer player) {
+    static Map<Identifier, Semver> getExtensions(ServerPlayer player) {
         ExtensionMap map = ((ExtensionMapHolder) player).getExtensionMap();
         if(map == null) return Collections.emptyMap();
 
@@ -33,7 +33,7 @@ public interface PlayerExtensions {
      * @param extensionId The extension ID to lookup
      * @return Whether the player has the extension enabled
      */
-    static boolean hasExtension(ServerPlayer player, ResourceLocation extensionId) {
+    static boolean hasExtension(ServerPlayer player, Identifier extensionId) {
 
         ExtensionMap map = ((ExtensionMapHolder) player).getExtensionMap();
         if(map == null || map.extensions().isEmpty()) return false;
@@ -48,7 +48,7 @@ public interface PlayerExtensions {
      * @return The player's extension version, or null if they do not have it enabled
      */
     @Nullable
-    static Semver getExtensionVersion(ServerPlayer player, ResourceLocation extensionId) {
+    static Semver getExtensionVersion(ServerPlayer player, Identifier extensionId) {
 
         ExtensionMap map = ((ExtensionMapHolder) player).getExtensionMap();
         if(map == null || map.extensions().isEmpty()) return null;
