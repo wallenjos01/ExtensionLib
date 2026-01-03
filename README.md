@@ -10,7 +10,7 @@ allows users to configure which extensions are enabled on a per-server or per-wo
 would experimental features. Servers will not be informed of disabled extensions.
 
 ### Servers
-Extension requirements can be configured in the `config/extensionlib/config.json` file. The `required_extension` field
+Extension requirements can be configured in the `config/extensionlib/config.json` file. The `required_extensions` field
 is a mapping of extension IDs to version predicates. <br/>
 For example: a configuration which requires any version of the `test:test` extension:
 ```json
